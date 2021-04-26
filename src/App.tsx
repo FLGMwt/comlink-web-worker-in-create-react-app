@@ -10,6 +10,9 @@ import { FibonacciWorkerType } from "./fibonacci.worker";
 import blockingFibonacci from "./fibonacci";
 import { wrap } from "comlink";
 
+const blockingPending = "Pending... Counter should be responsive";
+const workerPending = "Pending... Counter is not responsive";
+
 function App() {
   // Provide a normal React counter to demonstrate that the main thread
   // is unaffected by the worker calculation but locked by the sync one.
@@ -18,7 +21,7 @@ function App() {
   // Demonstrate thread locking with a long-running synchronous operation.
   const [blockingStatus, setBlockingStatus] = useState("idle");
   const startBlockingFibonacci = () => {
-    setBlockingStatus("Pending...");
+    setBlockingStatus(blockingPending);
     // Using setImmediate so that the `Pending...` status gets a chance to be
     // reflected in the UI.
     setImmediate(() => {
@@ -29,7 +32,7 @@ function App() {
 
   const [workerStatus, setWorkerStatus] = useState("Idle");
   const startWorker = async () => {
-    setWorkerStatus("Pending...");
+    setWorkerStatus(workerPending);
     // Instantiate the worker.
     const worker = new FibonacciWorker();
     // Use Comlink's `wrap` function with the instance to get a function.
@@ -48,13 +51,13 @@ function App() {
         <br />
         <button
           onClick={startBlockingFibonacci}
-          disabled={blockingStatus === "Pending..."}
+          disabled={blockingStatus === blockingPending}
         >
           Start calculation on main thread
         </button>
         <p>Main thread calculation status: {blockingStatus}</p>
         <br />
-        <button onClick={startWorker} disabled={workerStatus === "Pending..."}>
+        <button onClick={startWorker} disabled={workerStatus === workerPending}>
           Start calculation on worker
         </button>
         <p>Worker calculation status: {workerStatus}</p>
