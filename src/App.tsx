@@ -7,11 +7,8 @@ import "./App.css";
 import FibonacciWorker from "worker-loader!./fibonacci.worker";
 // Import the worker type directly.
 import { FibonacciWorkerType } from "./fibonacci.worker";
+import blockingFibonacci from "./fibonacci";
 import { wrap } from "comlink";
-
-const blockingFibonacci = (i: number): number => {
-  return i <= 1 ? i : blockingFibonacci(i - 1) + blockingFibonacci(i - 2);
-};
 
 function App() {
   // Provide a normal React counter to demonstrate that the main thread
