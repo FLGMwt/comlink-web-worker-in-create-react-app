@@ -10,8 +10,8 @@ import { FibonacciWorkerType } from "./fibonacci.worker";
 import blockingFibonacci from "./fibonacci";
 import { wrap } from "comlink";
 
-const blockingPending = "Pending... Counter should be responsive";
-const workerPending = "Pending... Counter is not responsive";
+const blockingPending = "Pending... Counter is not responsive";
+const workerPending = "Pending... Counter should be responsive";
 
 function App() {
   // Provide a normal React counter to demonstrate that the main thread
